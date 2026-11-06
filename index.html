@@ -1,0 +1,467 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lilith's Labyrinth — Vixen's Rhythm</title><style>
+:root{color-scheme:dark;--gold:#e9bb78;--red:#ff456a;--ink:#0b0710}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#301020,#08050a 75%);font-family:Georgia,'Times New Roman',serif;color:#fbe8d4;min-height:100vh}.shell{max-width:1380px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}.brand{font-size:clamp(19px,2.3vw,30px);letter-spacing:.09em;color:var(--gold);text-shadow:0 0 22px #b11e47}.small{font-size:12px;letter-spacing:.16em;color:#d7a8a9;text-transform:uppercase}.stats{display:flex;gap:9px;flex-wrap:wrap}.stat{border:1px solid #805047;background:#160b16;padding:8px 13px;border-radius:5px}.stage{position:relative;aspect-ratio:16/9;overflow:hidden;border:2px solid #ab664c;box-shadow:0 0 55px #7e153c50;background:linear-gradient(120deg,#21101e,#4b132b,#1a1022)}.stage img{width:100%;height:100%;object-fit:cover;display:block}.stage:after{content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 80px #0009}.fallback{height:100%;display:grid;place-content:center;text-align:center;background:radial-gradient(circle,#51132e,#100a17)}.fallback h2{font-size:clamp(25px,4vw,60px);color:#ffd3a5}.fallback p{color:#eab4c1}.controls{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px}.description{flex:1;min-width:220px;line-height:1.5;color:#e6c9c3}button{cursor:pointer;font-family:inherit;letter-spacing:.07em;text-transform:uppercase;color:#fff0dc;background:linear-gradient(#7d1634,#420d22);border:1px solid #e2a16e;padding:13px 23px;border-radius:4px;box-shadow:0 3px 16px #0008;font-size:15px}button:hover:not(:disabled){filter:brightness(1.3)}button:disabled{opacity:.4;cursor:not-allowed}.secondary{background:#20131c}.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#09050bdc;z-index:5;padding:22px}.panel{max-width:670px;width:100%;padding:clamp(18px,3vw,36px);background:linear-gradient(140deg,#270d21f2,#100b16f5);border:2px solid #bd795d;box-shadow:0 0 65px #ff174640;text-align:center}.panel h2{font-size:clamp(23px,3vw,40px);margin:7px 0;color:#ffd2a0}.panel p{line-height:1.55}.hidden{display:none!important}.challenge-ui{position:absolute;left:50%;bottom:5%;transform:translateX(-50%);width:min(88%,750px);z-index:3;background:#0c0712e8;border:1px solid #d4a074;padding:13px 19px 15px;box-shadow:0 0 30px #000;backdrop-filter:blur(7px)}.challenge-title{text-align:center;font-size:clamp(16px,2vw,25px);color:#ffe0b3;text-shadow:0 0 10px #ec395b}.challenge-sub{text-align:center;font-size:12px;color:#f2b9bc;margin:6px 0 10px}.meter{position:relative;height:24px;background:#21101d;border:1px solid #ae6d68;overflow:hidden}.fill{height:100%;width:0%;background:linear-gradient(90deg,#57244d,#d63e67,#ffb263);transition:width .035s linear}.zone{position:absolute;left:82%;width:13%;height:100%;top:0;background:#f8c77545;border-left:2px solid #ffdf95;border-right:2px solid #ffdf95;pointer-events:none}.tick{position:absolute;left:95%;top:-5px;height:33px;border-left:2px dashed #fff7}.meterlabels{display:flex;justify-content:space-between;font-size:11px;margin-top:6px;color:#e7b2a5}.challenge-actions{display:flex;justify-content:center;margin-top:10px}.hint{text-align:center;font-size:12px;color:#efb4c3;margin-top:8px}.footer{margin-top:15px;text-align:center;color:#aa8a88;font-size:12px}kbd{background:#2b1b25;padding:2px 5px;border:1px solid #7a4b5d;border-radius:3px}@media(max-width:650px){.shell{padding:9px}.challenge-ui{width:96%;bottom:2%;padding:8px}.challenge-title{font-size:15px}.challenge-sub{font-size:10px;margin:3px}.meter{height:18px}.controls button{width:100%}.panel{padding:15px}.stage{aspect-ratio:4/4}}
+
+/* Vixen's journey-aware dialogue */
+.vixen-voice{margin:12px 0;padding:13px 17px;border:1px solid #aa6175;border-radius:12px;background:linear-gradient(100deg,#2b1022e8,#140d1de8);box-shadow:0 0 22px #a52a5033}.voice-head{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#e9b984;font-size:12px;letter-spacing:.07em}.voice-quote{font-size:16px;color:#ffe1d5;font-style:italic;line-height:1.5;margin-top:7px}.voice-log{max-height:245px;overflow:auto;margin-top:9px;padding:8px;border-top:1px solid #754251}.voice-entry{padding:7px 3px;border-bottom:1px solid #4d2b3a;font-size:13px;color:#f2d4d1}.voice-entry small{display:block;color:#d5a987;margin-bottom:3px}.voice-button{font-size:12px;padding:6px 10px}.voice-quote.flash{animation:voiceglow .65s ease}@keyframes voiceglow{0%{text-shadow:0 0 15px #ff7c8f}100%{text-shadow:none}}
+</style><style>
+.rhythm{margin:16px 0;padding:18px;border:1px solid #a96b64;background:#1b0d19;border-radius:8px}.rhythm h3{margin:0 0 8px;color:#ffd3a1}.rhythm-top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}.rhythm select{background:#25101e;color:#ffe4c6;border:1px solid #b87e69;padding:9px}.track{height:94px;position:relative;margin:14px 0 7px;border:1px solid #8b5064;background:linear-gradient(90deg,#2a1027,#120a17);overflow:hidden}.pulse-line{position:absolute;left:15%;top:0;bottom:0;width:3px;background:#ffd9a0;box-shadow:0 0 15px #ff537f}.beat{position:absolute;top:26px;width:30px;height:30px;border-radius:50%;background:#f35b80;box-shadow:0 0 17px #ff426c;transform:translateX(-50%)}.pulse-flash{animation:flash .22s ease-out}@keyframes flash{0%{box-shadow:0 0 15px #ff537f}35%{box-shadow:0 0 35px 15px #ff9dbe}100%{box-shadow:0 0 15px #ff537f}}.rhythm-controls{display:flex;gap:9px;flex-wrap:wrap}.rhythm-controls button{padding:9px 14px}.progress{height:9px;background:#39212e;border:1px solid #765063;margin-top:12px}.progress div{height:100%;background:linear-gradient(90deg,#a32d5a,#ffc079);width:0%}.rhythm-note{color:#e9b9c3;font-size:13px;margin-top:8px}
+</style><style>
+.builder{position:fixed;inset:0;z-index:40;background:#08050beF;display:grid;place-items:center;padding:18px;overflow:auto}.builder-card{width:min(720px,100%);max-height:95vh;overflow:auto;padding:25px;background:linear-gradient(135deg,#30101e,#110b17);border:2px solid #c38a64;box-shadow:0 0 60px #ad235155}.builder-card h2{color:#ffd3a1;margin:4px 0}.builder-card fieldset{border:1px solid #7c4d59;margin:14px 0;padding:13px}.builder-card legend{color:#f0c18b}.builder-card label{display:block;padding:6px;cursor:pointer}.builder-card input{accent-color:#d6496a}.builder-card select{background:#25101e;color:#ffe4c6;padding:8px;border:1px solid #b87e69}.tempo-banner{font-size:13px;color:#ffd3a1;letter-spacing:.04em;margin-top:6px}.tempo-banner strong{color:#fff1c9}.moodline{color:#ffd3a1;font-style:italic;margin-top:8px}.hidden-room-banner{color:#f6c58d;font-size:13px;letter-spacing:.09em}.builder-card button{margin:6px}
+</style><style>
+.online-art-panel{position:absolute;inset:4% 3% 6%;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;pointer-events:none;background:linear-gradient(180deg,#100713ed,#170a1be8);border:1px solid #c38a64;border-radius:12px;padding:14px;text-align:center}.online-art-panel.hidden{display:none}.online-art-panel img{object-fit:contain;min-height:0;max-height:65%;max-width:100%;border-radius:7px}.online-art-panel a,.online-art-panel button{pointer-events:auto;color:#ffe2a5}.online-art-panel .small{max-width:550px}.online-art-panel .online-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}.online-art-panel button{padding:7px 12px}.online-art-panel a{font-size:14px}
+</style><style>
+.vixen-command{margin-top:12px;padding:12px 15px;border:1px solid #bb765b;border-radius:10px;background:#25111c;color:#ffe0b8}.vixen-command strong{color:#ffc984}.vixen-command small{display:block;margin-top:5px;color:#dfb8bd}.vixen-command.hidden{display:none}.track.blackout .beat{visibility:hidden!important}.track.blackout{background:linear-gradient(90deg,#09060c,#160913,#09060c)!important}.track.blackout::after{content:'VIXEN’S BLACKOUT · LISTEN FOR THE BEAT';position:absolute;top:6px;left:26%;right:4%;font-size:11px;letter-spacing:1px;color:#f1b0bc;pointer-events:none}.door-overlay{position:fixed;inset:0;z-index:65;background:#08040ceF;display:flex;align-items:center;justify-content:center;padding:16px}.door-overlay.hidden{display:none}.door-card{width:min(760px,100%);background:linear-gradient(#321221,#120914);border:1px solid #c4877a;border-radius:16px;padding:22px;text-align:center;box-shadow:0 0 55px #a21e5140}.door-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.door-choice{min-height:125px;background:linear-gradient(#4d1a2d,#230e1a);border:1px solid #bd7b6d;border-radius:10px;color:#fbe0bf;cursor:pointer;font:inherit;padding:12px}.door-choice:hover,.door-choice:focus-visible{border-color:#ffe4a4;background:#5e2035}.door-choice span{display:block;font-size:32px;margin-bottom:8px}@media(max-width:550px){.door-grid{grid-template-columns:1fr}.door-choice{min-height:70px}}
+</style></head><body><div class="shell"><header class="top"><div><div class="small">A gothic labyrinth adventure</div><div class="brand">LILITH'S LABYRINTH <span style="color:#c85b72">✦</span> VIXEN'S RHYTHM</div></div><div class="stats"><div class="stat">CHAMBER <b id="count">01 / 25</b></div><div class="stat">EDGE CHANCE <b id="chance">20%</b></div><div class="stat">ATTEMPTS <b id="attempts">1</b></div><div class="stat">TOTAL CLENCHES <b id="clenchCount">0</b></div><div class="stat">ACTIVE SEALS <b id="sealCount">0</b></div></div></header><main class="stage" id="stage"><img id="art" alt="Chamber illustration"><div id="onlineArtPanel" class="online-art-panel hidden" aria-live="polite"><strong>THE SECRET GALLERY · 18+</strong><span id="onlineArtStatus" class="small">Loading online artwork…</span><img id="onlineArtImage" class="hidden" alt="Random external gallery artwork"><div class="online-actions"><a id="onlineArtLink" href="https://rule34.xxx/" target="_blank" rel="noopener noreferrer">Open artwork on Rule34.xxx</a><button id="onlineArtNext" class="secondary" type="button">Another artwork</button><button id="onlineArtHide" class="secondary" type="button">Hide gallery</button></div><span class="small">External artwork belongs to its respective creators. The game does not verify its content or licensing.</span></div><div id="fallback" class="fallback hidden"><h2 id="fallbackTitle"></h2><p>Artwork not supplied — continue your journey</p></div><div id="challenge" class="challenge-ui hidden"><div class="challenge-title">EDGE — DO NOT RELEASE</div><div class="challenge-sub">Only you can judge how close you are to release. Choose your path.</div><div class="challenge-actions" style="gap:12px;flex-wrap:wrap"><button id="moveOn">MOVE ON</button><button id="startOverEdge" class="secondary">START OVER</button></div><div class="hint">There is no meter or automatic judgment. The decision is yours.</div></div><div id="modal" class="overlay"><div class="panel"><div class="small" id="modalKicker">Enter the labyrinth</div><h2 id="modalTitle">Vixen's Rhythm</h2><p id="modalText">Journey through 25 chambers. Each passage has a chance to trigger the Edge challenge. Decide for yourself whether you are close to release. At the Edge, choose Move On to continue or Start Over to return to Chamber 1.</p><button id="modalButton">Begin the Journey</button></div></div></main><section class="vixen-voice" id="vixenVoice"><div class="voice-head"><span>✦ VIXEN SPEAKS · <strong id="voiceMood">CURIOUS</strong></span><button class="secondary voice-button" id="voiceToggle" type="button">Dialogue History (0)</button></div><div class="voice-quote" id="voiceQuote" aria-live="polite">The labyrinth awaits your choice.</div><div id="voiceLog" class="voice-log hidden" aria-label="Vixen dialogue history"></div></section><section class="rhythm" id="rhythm"><div class="rhythm-top"><div><h3>CHAMBER RHYTHM · CLENCH CHALLENGE</h3><span id="patternLabel">Three quick · three slow</span><div id="tempoBanner" class="tempo-banner">Vixen’s mood: awaiting the labyrinth</div></div><label>Metronome sound <select id="sound"><option value="snap">Finger snap</option><option value="click">Wooden click</option></select></label></div><div class="track" id="track"><div class="pulse-line" id="pulseLine"></div></div><div id="vixenCommand" class="vixen-command hidden" aria-live="polite"></div><div class="rhythm-controls"><button id="rhythmStart">Start rhythm</button><button id="rhythmPause" class="secondary">Pause</button><button id="rhythmSkip" class="secondary">Skip / Rest</button><button id="release" class="hidden">RELEASE · Finish</button><span id="rhythmTime" style="align-self:center">0:00 / 0:45</span></div><div class="progress"><div id="rhythmProgress"></div></div><div class="rhythm-note" id="rhythmStatus">Follow the approaching beats: clench at each audible pulse and release between beats. Complete the chamber to reveal the next passage.</div></section><section class="controls"><div class="description"><strong id="name" style="color:#f2bd8d">01 — The Summoning</strong><div id="desc">The labyrinth awakens. Every step carries a risk.</div></div><button class="secondary" id="restart">Restart</button><button id="failure" style="background:linear-gradient(#8c2230,#3c0a14);border-color:#ff8793">FAILURE · END RUN</button><button id="next">Enter Next Chamber →</button></section><div class="footer">A single-player gothic labyrinth adventure. At the Edge, only you decide whether to move on or start over.</div></div><div id="runBuilder" class="builder hidden"><div class="builder-card"><div class="small">The labyrinth reshapes itself</div><h2>LABYRINTH RUN BUILDER</h2><p>Choose the rules of this journey. Every passage can surprise you.</p><fieldset><legend>Difficulty</legend><label><input type="radio" name="difficulty" value="normal" checked> Normal — original chamber rhythms</label><label><input type="radio" name="difficulty" value="hard"> Hard — faster beats and longer challenges</label><label><input type="radio" name="difficulty" value="nightmare"> Nightmare — fastest beats and longest challenges</label></fieldset><fieldset><legend>Run length</legend><label><input type="radio" name="length" value="short"> Short — 10 encounters, then final chamber</label><label><input type="radio" name="length" value="standard"> Standard — 25 encounters, then final chamber</label><label><input type="radio" name="length" value="endless" checked> Endless — no encounter limit; find Chamber 25 through the maze</label></fieldset><fieldset><legend>Modifiers & Optional Trap Settings</legend><label><input type="checkbox" id="moodOption" checked> Vixen's changing moods</label><label><input type="checkbox" id="secretOption" checked> Hidden rooms and secret passages</label><label><input type="checkbox" id="plugOption"> Enable Crimson Plug trap events</label><label><input type="checkbox" id="soundOption"> Enable Crimson Sound trap events</label><input type="checkbox" id="onlineArtOption" hidden disabled><p class="small">Optional external artwork. Third-party content is not reviewed by the game. Only enable if you are an adult and wish to view adult-oriented artwork. An internet connection is required; some browsers block cross-site image/API access.</p><p class="small">Optional traps are fictional magical seals. No physical actions are required.</p></fieldset><p class="small">The clench counter, audio metronome, Edge encounters, Failure, and final Release are always enabled.</p><button id="beginConfigured">Enter the Labyrinth</button><button class="secondary" id="builderCancel">Back</button></div></div><script>
+const chambers=[['The Summoning','1- The Summoning.webp'],['Velvet Passage','2- Velvet Passage.webp'],['The Whisper','3- The Whisper.webp'],['Crimson Mirror','4- Crimson Mirro.webp'],["The Fox's Den",'5- Fox Den.webp'],['Moonlit Gate','5- Moonlit Gate.webp'],['The Bound Garden','7- The Bound Garden.webp'],['Silver Chain','8- Silver Chain.webp'],['Scarlet Chamber','9- Scarlet Chamber.webp'],['Broken Stair','10- Broken Stairs.webp'],['Secret Garden','11- Secret Garden.webp'],['The Dark Oracle','12- The Dark Oracle.webp'],['Hall of Echoes','13- Hall of Echoes.webp'],["The Queen's Favor",'14- The Queens Favor.webp'],['Obsidian Passage','15- Obsidian Passage.webp'],['The False Door','16- The False Door.webp'],['The Scarlet Crown','17- The Scarlet Crown.webp'],['Midnight Vigil','18- Midnight Vigil.webp'],['The Three Keys','19- The Three Keys.webp'],['The Shadow Gate','20- The Shadow Gate.webp'],["The Vixen's Bargain",'21- The Vixens Bargain.webp'],['The Moonstone Path','22- Moonlit Path.webp'],['The Thorned Throne','23- The Thorned Throne.webp'],['The Final Mirror','24- The Final Mirror.webp'],['Release','25- Release.webp']];
+const EDGE_PROBABILITY=.20;let chamber=0,attempts=1,mode='intro',pending=0;let cleared=false,totalClenches=0,runEnded=false;const $=id=>document.getElementById(id);$('chance').textContent=Math.round(EDGE_PROBABILITY*100)+'%';function art(file){if(file){$('art').src='assets/'+encodeURIComponent(file);$('art').classList.remove('hidden');$('fallback').classList.add('hidden')}else{$('art').classList.add('hidden');$('fallback').classList.remove('hidden');$('fallbackTitle').textContent=chambers[chamber][0]}}function render(){const [name,file]=chambers[chamber];$('count').textContent=String(chamber+1).padStart(2,'0')+' / 25';$('attempts').textContent=attempts;$('clenchCount').textContent=totalClenches;$('name').textContent=String(chamber+1).padStart(2,'0')+' — '+name;$('desc').textContent=chamber===24?'The labyrinth releases its hold. You have completed the journey.':'The next chamber awaits. A hidden challenge may interrupt the passage.';art(file);$('next').disabled=mode!=='play'||!cleared;$('next').textContent=chamber===24?'Press RELEASE below':'Reveal Next Passage 🎲';if(chamber===24)$('next').disabled=true;$('challenge').classList.toggle('hidden',mode!=='edge')}
+function modal(kicker,title,description,button,fn){$('modalKicker').textContent=kicker;$('modalTitle').textContent=title;$('modalText').textContent=description;$('modalButton').textContent=button;$('modalButton').onclick=()=>{$('modal').classList.add('hidden');fn()};$('modal').classList.remove('hidden')}
+function start(){mode='play';runEnded=false;cleared=false;resetRhythm();render()}function advance(){if(mode!=='play')return;if(chamber===24)return;pending=rollPassage();if(Math.random()<EDGE_PROBABILITY)beginEdge();else{chamber=pending;onEnter()}}function onEnter(){visitedCount++;mode='play';cleared=false;resetRhythm();render()}function beginEdge(){rhythmRunning=false;cancelAnimationFrame(frame);mode='edge';$('art').src='assets/Edge.webp';$('art').classList.remove('hidden');$('fallback').classList.add('hidden');$('challenge').classList.remove('hidden');$('next').disabled=true}function moveOn(){if(mode!=='edge')return;$('challenge').classList.add('hidden');chamber=pending;onEnter()}function edgeRestart(){if(mode!=='edge')return;$('challenge').classList.add('hidden');attempts++;chamber=0;start()}function reset(){attempts=1;chamber=0;visitedCount=1;totalClenches=0;start()}$('next').onclick=advance;$('moveOn').onclick=moveOn;$('startOverEdge').onclick=edgeRestart;$('failure').onclick=()=>endRun(false);$('release').onclick=()=>{if(chamber===24&&mode==='play')endRun(true)};function endRun(success){if(runEnded)return;runEnded=true;rhythmRunning=false;rhythmPaused=false;cancelAnimationFrame(frame);mode='ended';$('rhythm').classList.add('hidden');$('challenge').classList.add('hidden');render();modal(success?'The labyrinth is complete':'The labyrinth claims this attempt',success?'RELEASE — JOURNEY COMPLETE':'FAILURE — JOURNEY ENDED',`You completed ${totalClenches.toLocaleString()} clenches before ${success?'release':'ending this run'}. Chambers visited: ${visitedCount}. Attempts: ${attempts}.`,'Play Again',reset)}$('restart').onclick=()=>modal('A new beginning','Restart the Labyrinth?','Your current progress will be lost.','Restart',reset);$('modalButton').onclick=()=>{$('modal').classList.add('hidden');start()};render();
+
+// Random passages, with forward, backward, and occasional secret jumps.
+function rollPassage(){if(chamber===24)return 24;const r=Math.random();if(r<.12)return Math.max(0,chamber-1);if(r<.23)return Math.min(24,chamber+2+Math.floor(Math.random()*3));return Math.min(24,chamber+1)}
+// Web Audio synthesizes two distinctly different percussive metronome timbres.
+let visitedCount=1;let audioCtx=null, rhythmRunning=false,rhythmPaused=false,startedAt=0,elapsedMs=0,lastFrame=0,frame=0,beatIndex=0,beatTimes=[],durationMs=45000;
+// Each chamber has a distinct repeating rhythm. Durations are milliseconds.
+const PATTERNS=[
+ ['Awakening · steady march',[700,700,700,700]],
+ ['Velvet · quick double / long pause',[330,330,1050,720]],
+ ['Whisper · uneven heartbeat',[420,840,420,1160]],
+ ['Mirror · reflected triplets',[380,380,380,920,920]],
+ ['Den · slow sway with flourish',[1000,750,750,300,300]],
+ ['Moonlit · four quick / one long',[350,350,350,350,1200]],
+ ['Garden · syncopated petals',[650,300,950,300,650]],
+ ['Silver Chain · alternating pairs',[400,400,850,400,400,1100]],
+ ['Scarlet · driving six-beat',[320,320,480,320,320,800]],
+ ['Broken Stair · staggered steps',[850,420,700,350,1000]],
+ ['Secret Garden · floating waltz',[560,560,1120]],
+ ['Oracle · omen and answer',[950,300,300,950,450]],
+ ['Echoes · call and response',[370,370,900,370,370,900,1100]],
+ ['Favor · graceful accelerando',[850,700,550,400,1100]],
+ ['Obsidian · heavy double',[1050,360,360,1050]],
+ ['False Door · deceptive offbeats',[480,900,280,720,280]],
+ ['Crown · royal procession',[650,650,330,330,980]],
+ ['Vigil · long-short-long',[1100,350,1050,350,600]],
+ ['Three Keys · three distinct triples',[300,300,900,450,450,900,600,600,1100]],
+ ['Shadow Gate · cascading steps',[800,650,500,350,350,1000]],
+ ['Bargain · tension and pause',[300,300,300,1300,450,850]],
+ ['Moonstone · soft rolling waves',[750,500,750,500,1100]],
+ ['Thorned Throne · sharp syncopation',[400,800,400,400,800,400]],
+ ['Final Mirror · mirrored rush',[300,400,500,900,500,400,300,1100]],
+ ['Release · endless fast pulse',[265,265,265,265,265,265,265,265]]
+];
+function makePattern(){const [name,pattern]=PATTERNS[chamber];$('patternLabel').textContent=name+(chamber===24?' · continues until RELEASE':'');beatTimes=[];let t=450;while(t<(Number.isFinite(durationMs)?durationMs+2500:30000)){beatTimes.push(t);t+=pattern[(beatTimes.length-1)%pattern.length]}}
+function soundBeat(){try{
+ audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();
+ const now=audioCtx.currentTime, snap=$('sound').value==='snap';
+ if(snap){
+  // A short dry finger-snap transient: filtered noise, a low fleshy thump, and fast decay.
+  const n=Math.floor(audioCtx.sampleRate*.085),buffer=audioCtx.createBuffer(1,n,audioCtx.sampleRate),data=buffer.getChannelData(0);
+  for(let i=0;i<n;i++){const env=Math.exp(-i/(audioCtx.sampleRate*.012));data[i]=(Math.random()*2-1)*env;}
+  const source=audioCtx.createBufferSource();source.buffer=buffer;
+  const band=audioCtx.createBiquadFilter();band.type='bandpass';band.frequency.value=1950;band.Q.value=.65;
+  const gain=audioCtx.createGain();gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.52,now+.002);gain.gain.exponentialRampToValueAtTime(.0001,now+.068);
+  source.connect(band).connect(gain).connect(audioCtx.destination);source.start(now);source.stop(now+.085);
+  const thump=audioCtx.createOscillator(),tg=audioCtx.createGain();thump.type='sine';thump.frequency.setValueAtTime(310,now);thump.frequency.exponentialRampToValueAtTime(125,now+.038);tg.gain.setValueAtTime(.16,now);tg.gain.exponentialRampToValueAtTime(.0001,now+.05);thump.connect(tg).connect(audioCtx.destination);thump.start(now);thump.stop(now+.052);
+ }else{
+  const osc=audioCtx.createOscillator(),gain=audioCtx.createGain(),filter=audioCtx.createBiquadFilter();osc.type='square';osc.frequency.setValueAtTime(1150,now);osc.frequency.exponentialRampToValueAtTime(370,now+.023);filter.type='bandpass';filter.frequency.value=1100;filter.Q.value=1.3;gain.gain.setValueAtTime(.2,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.032);osc.connect(filter).connect(gain).connect(audioCtx.destination);osc.start(now);osc.stop(now+.038);
+ }
+}catch(e){$('rhythmStatus').textContent='Audio unavailable; visual pulses remain active.'}}
+function resetRhythm(){cancelAnimationFrame(frame);rhythmRunning=false;rhythmPaused=false;elapsedMs=0;beatIndex=0;durationMs=chamber===24?Number.POSITIVE_INFINITY:45000+(chamber%4)*15000;makePattern();$('rhythmStart').textContent='Start rhythm';$('rhythmPause').textContent='Pause';$('rhythmProgress').style.width='0%';$('rhythmTime').textContent=chamber===24?'0:00 / ∞':'0:00 / '+Math.floor(durationMs/60000)+':'+String(Math.floor(durationMs/1000)%60).padStart(2,'0');$('release').classList.toggle('hidden',chamber!==24);$('rhythmSkip').classList.toggle('hidden',chamber===24);$('rhythmStatus').textContent=chamber===24?'Endless fast rhythm. Press RELEASE when ready to finish your journey.':'Follow the approaching beats: clench at each audible pulse and release between beats.';renderBeats(0)}
+function renderBeats(t){const track=$('track');track.querySelectorAll('.beat').forEach(x=>x.remove());const lookahead=2200;for(let i=Math.max(0,beatIndex-1);i<beatTimes.length;i++){const delta=beatTimes[i]-t;if(delta>lookahead)break;if(delta< -160)continue;let el=document.createElement('div');el.className='beat';el.style.left=(15+85*delta/lookahead)+'%';el.style.opacity=delta<0?.4:1;track.appendChild(el)}}
+function finishRhythm(){rhythmRunning=false;rhythmPaused=false;cancelAnimationFrame(frame);cleared=true;$('rhythmProgress').style.width='100%';$('rhythmStatus').textContent='Chamber cleared. Reveal the next randomized passage.';$('rhythmStart').textContent='Replay rhythm';render()}
+function rhythmTick(now){if(!rhythmRunning)return;elapsedMs=now-startedAt;if(typeof applyMoodShift==='function')applyMoodShift(elapsedMs);while(beatIndex<beatTimes.length&&beatTimes[beatIndex]<=elapsedMs){if(beatTimes[beatIndex]>=0){soundBeat();totalClenches++;$('clenchCount').textContent=totalClenches;const line=$('pulseLine');line.classList.remove('pulse-flash');void line.offsetWidth;line.classList.add('pulse-flash')}beatIndex++}if(chamber===24&&beatIndex>=beatTimes.length-12){const pat=PATTERNS[24][1];let t=beatTimes[beatTimes.length-1]+pat[(beatTimes.length-1)%pat.length];for(let j=0;j<180;j++){beatTimes.push(t);t+=pat[(beatTimes.length-1)%pat.length]}}renderBeats(elapsedMs);$('rhythmProgress').style.width=chamber===24?'100%':Math.min(100,100*elapsedMs/durationMs)+'%';const secs=Math.floor(elapsedMs/1000),total=Math.floor(durationMs/1000);$('rhythmTime').textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0')+(chamber===24?' / ∞':' / '+Math.floor(total/60)+':'+String(total%60).padStart(2,'0'));if(chamber!==24&&elapsedMs>=durationMs){finishRhythm();return}frame=requestAnimationFrame(rhythmTick)}
+$('rhythmStart').onclick=()=>{if(mode!=='play')return;if(rhythmRunning)return;try{audioCtx ||= new (window.AudioContext||window.webkitAudioContext)();audioCtx.resume()}catch(e){}if(!rhythmPaused){elapsedMs=0;beatIndex=0;cleared=false;render()}startedAt=performance.now()-elapsedMs;rhythmRunning=true;rhythmPaused=false;$('rhythmStart').textContent='Running…';if(typeof initializeMoodTempo==='function'&&!rhythmPaused)initializeMoodTempo();$('rhythmStatus').textContent='Clench with each snap or click; release in the spaces between.';frame=requestAnimationFrame(rhythmTick)};
+$('rhythmPause').onclick=()=>{if(rhythmRunning){rhythmRunning=false;rhythmPaused=true;cancelAnimationFrame(frame);$('rhythmStart').textContent='Resume rhythm';$('rhythmStatus').textContent='Paused.'}};
+$('rhythmSkip').onclick=()=>{if(mode==='play'&&chamber!==24)finishRhythm()};
+// Hide the rhythm controls while the Edge prompt or an introductory modal is displayed.
+const originalRender=render;render=function(){originalRender();$('rhythm').classList.toggle('hidden',mode!=='play')};
+resetRhythm();render();
+
+// Run builder and modular labyrinth director.
+let runConfig={difficulty:'normal',length:'endless',moods:true,secrets:true,plug:false,sound:false,onlineArt:false};
+let mood='curious',hiddenRoom=null,history=[0],secretDiscoveries=0;
+const moods={curious:['Vixen watches your next step with quiet curiosity.','The queen wonders which path you will choose.'],playful:['Vixen smiles as the corridors rearrange.','A teasing laugh follows you into the dark.'],demanding:['Vixen expects precision from your next rhythm.','The queen raises the stakes with a stern glance.'],impressed:['Vixen seems impressed by your persistence.','A rare approving smile greets your return.']};
+const hiddenRooms=[{name:'The Forgotten Alcove',description:'A secret alcove offers a brief respite before the maze folds around you.',file:'Secret room.webp'},{name:'The Ruby Antechamber',description:'A concealed crimson passage sends you toward an unfamiliar door.',file:'Secret room.webp'},{name:'The Veiled Observatory',description:'The stars above this hidden room reveal a strange shortcut.',file:'Secret room.webp'}];
+const baseMakePattern=makePattern;
+makePattern=function(){baseMakePattern();const factor=runConfig.difficulty==='nightmare'?.70:runConfig.difficulty==='hard'?.85:1;if(factor!==1){const original=beatTimes.slice();beatTimes=original.map(t=>Math.round(t*factor));$('patternLabel').textContent+=' · '+runConfig.difficulty.toUpperCase()}};
+const baseResetRhythm=resetRhythm;
+resetRhythm=function(){baseResetRhythm();if(chamber!==24&&runConfig.difficulty!=='normal'){durationMs=Math.round(durationMs*(runConfig.difficulty==='nightmare'?1.35:1.15));makePattern()}if(typeof initializeMoodTempo==='function')initializeMoodTempo();if(hiddenRoom){$('patternLabel').textContent+=' · Secret chamber';$('rhythmStatus').textContent='A hidden chamber: follow the rhythm to escape.'}};
+const baseArt=art;
+art=function(file){baseArt(hiddenRoom?hiddenRoom.file:file)};
+const baseRender=render;
+render=function(){baseRender();if(mode==='play'&&hiddenRoom){$('name').textContent='✦ SECRET — '+hiddenRoom.name;$('desc').textContent=hiddenRoom.description+' · Discovered: '+secretDiscoveries;$('count').textContent='SECRET / 25'}else if(mode==='play'&&runConfig.moods){$('desc').textContent=moods[mood][(visitedCount+attempts)%2]+' '+(chamber===24?'The final rhythm continues until you press RELEASE.':'A passage awaits beyond this rhythm.')} };
+// Mood changes are scheduled during the chamber, not only at its entrance.
+// Regenerate only unplayed beats, preserving the clench count and audio/visual synchronization.
+const moodTempo={curious:{factor:1,label:'Measured'},playful:{factor:.78,label:'Quick & playful'},demanding:{factor:.62,label:'Fast & demanding'},impressed:{factor:1.14,label:'Slow & deliberate'}};
+let nextMoodShift=Infinity,moodShiftNumber=0;
+function updateTempoBanner(){const el=$('tempoBanner');if(!el)return;
+ if(!runConfig.moods){el.textContent='Mood tempo shifts disabled';return}
+ const detail=moodTempo[mood];el.innerHTML='Vixen’s mood: <strong>'+mood.toUpperCase()+'</strong> · '+detail.label+' · '+Math.round(100/detail.factor)+'% tempo';}
+function initializeMoodTempo(){moodShiftNumber=0;nextMoodShift=runConfig.moods?8500+Math.random()*5500:Infinity;updateTempoBanner()}
+function applyMoodShift(t){if(!runConfig.moods||mode!=='play'||t<nextMoodShift)return;
+ const keys=Object.keys(moodTempo).filter(k=>k!==mood);mood=keys[Math.floor(Math.random()*keys.length)];moodShiftNumber++;
+ const factor=moodTempo[mood].factor*(runConfig.difficulty==='nightmare'?.70:runConfig.difficulty==='hard'?.85:1);
+ // Preserve every elapsed beat; rebuild future beat timestamps from the last audible pulse.
+ const last=beatIndex>0?beatTimes[beatIndex-1]:Math.max(0,t-350);
+ const retained=beatTimes.slice(0,beatIndex);const pat=PATTERNS[chamber][1];
+ let cursor=Math.max(t+180,last+Math.max(150,Math.round(pat[(beatIndex-1+pat.length)%pat.length]*factor)));
+ const target=Number.isFinite(durationMs)?durationMs+3000:t+32000;
+ let i=beatIndex;while(cursor<target){retained.push(cursor);cursor+=Math.max(150,Math.round(pat[i%pat.length]*factor));i++}
+ beatTimes=retained;
+ nextMoodShift=t+8500+Math.random()*8000;
+ updateTempoBanner();$('patternLabel').textContent=PATTERNS[chamber][0]+' · '+mood.toUpperCase()+' TEMPO';
+ $('rhythmStatus').textContent='Vixen turns '+mood+'! The approaching beats shift to a '+moodTempo[mood].label.toLowerCase()+' tempo.';
+ $('desc').textContent=moods[mood][moodShiftNumber%2]+' The rhythm changes with her mood.';
+}
+function selectMood(){if(!runConfig.moods){nextMoodShift=Infinity;updateTempoBanner();return}const keys=Object.keys(moods);mood=keys[Math.floor(Math.random()*keys.length)];updateTempoBanner()}
+
+function showBuilder(){$('modal').classList.add('hidden');$('runBuilder').classList.remove('hidden')}
+$('builderCancel').onclick=()=>{$('runBuilder').classList.add('hidden');modal('Enter the labyrinth',"Vixen's Rhythm",'Choose your run settings to begin.','Configure Run',showBuilder)};
+$('beginConfigured').onclick=()=>{runConfig={difficulty:document.querySelector('input[name="difficulty"]:checked').value,length:document.querySelector('input[name="length"]:checked').value,moods:$('moodOption').checked,secrets:$('secretOption').checked,plug:$('plugOption').checked,sound:$('soundOption').checked,onlineArt:$('onlineArtOption').checked};$('runBuilder').classList.add('hidden');attempts=1;chamber=0;visitedCount=1;totalClenches=0;history=[0];hiddenRoom=null;secretDiscoveries=0;selectMood();start()};
+// Initial and replay flow always offer the builder.
+$('modalButton').onclick=showBuilder;
+const oldRollPassage=rollPassage;
+rollPassage=function(){if(runConfig.length==='short'&&visitedCount>=10||runConfig.length==='standard'&&visitedCount>=25)return 24;
+ if(runConfig.secrets){const r=Math.random();if(r<.12){hiddenRoom=hiddenRooms[Math.floor(Math.random()*hiddenRooms.length)];secretDiscoveries++;return chamber}if(r<.29)return Math.floor(Math.random()*25);if(r<.46&&history.length)return history[Math.floor(Math.random()*history.length)];}
+ return oldRollPassage()};
+const oldOnEnter=onEnter;
+onEnter=function(){visitedCount++;history.push(chamber);selectMood();mode='play';cleared=false;resetRhythm();render()};
+const oldAdvance=advance;
+advance=function(){if(mode!=='play'||!cleared||chamber===24)return;
+ // Leaving a secret chamber always returns to the normal labyrinth.
+ if(hiddenRoom){hiddenRoom=null;pending=Math.floor(Math.random()*25);if(Math.random()<EDGE_PROBABILITY)beginEdge();else{chamber=pending;onEnter()}return}
+ oldAdvance()};
+const oldEdgeRestart=edgeRestart;
+edgeRestart=function(){hiddenRoom=null;history=[0];oldEdgeRestart()};
+const oldReset=reset;
+reset=function(){hiddenRoom=null;history=[0];secretDiscoveries=0;selectMood();oldReset()};
+const oldEndRun=endRun;
+endRun=function(success){oldEndRun(success);if(runEnded){$('modalText').textContent+=' Hidden chambers discovered: '+secretDiscoveries+'. Difficulty: '+runConfig.difficulty+'. Run length: '+runConfig.length+'.';$('modalButton').onclick=showBuilder}};
+// Keep Failure accessible even when the intro / edge overlay is visible after a run starts.
+$('failure').onclick=()=>{if(mode==='play'||mode==='edge')endRun(false)};
+// Make the first modal explicitly lead into run setup.
+$('modalText').textContent='Build your run with difficulty, length, and labyrinth modifiers before entering.';
+$('modalButton').textContent='Configure Run';
+
+// Optional fantasy-seal events. All actions are confined to the game UI.
+let seals={plug:false,sound:false},trapEvents=0;
+const sealInfo={plug:{title:'Crimson Plug',file:'Crimson Plug.webp'},sound:{title:'Crimson Sound',file:'Crimson Sound.webp'}};
+function sealCount(){return Number(seals.plug)+Number(seals.sound)}
+function updateSealCount(){ $('sealCount').textContent=sealCount()+' / 2' }
+function moodTrapOdds(){return ({demanding:.32,playful:.19,curious:.13,impressed:.07})[mood]??.13}
+function moodClearOdds(){return ({impressed:.40,curious:.22,playful:.13,demanding:.06})[mood]??.20}
+function maybeSealEvent(){
+ if(mode!=='play'||runEnded||hiddenRoom||chamber===24)return;
+ const choices=[];
+ for(const type of ['plug','sound']){
+  if(!runConfig[type])continue;
+  if(!seals[type]&&Math.random()<moodTrapOdds())choices.push({type,kind:'bind'});
+  if(seals[type]&&Math.random()<moodClearOdds())choices.push({type,kind:'clear'});
+ }
+ if(!choices.length)return;
+ const event=choices[Math.floor(Math.random()*choices.length)];const info=sealInfo[event.type];
+ seals[event.type]=event.kind==='bind';trapEvents++;updateSealCount();
+ // Preserve the chamber and rhythm progress; show a one-click story interlude.
+ rhythmRunning=false;cancelAnimationFrame(frame);
+ $('art').src='assets/'+encodeURIComponent(info.file);$('art').classList.remove('hidden');
+ $('fallback').classList.add('hidden');
+ $('rhythm').classList.add('hidden');
+ modal('Vixen’s enchanted traps',info.title+(event.kind==='bind'?' — Seal Awakened':' — Seal Lifted'),
+ event.kind==='bind'?'Vixen’s '+mood+' mood awakens a crimson magical seal. Its effect is now marked active in your run.':'Vixen’s '+mood+' mood lifts the magical seal. Its effect is no longer active.',
+ 'Continue the Journey',()=>{$('modal').classList.add('hidden');render();$('rhythm').classList.remove('hidden')});
+}
+const sealOriginalEnter=onEnter;
+onEnter=function(){sealOriginalEnter();updateSealCount();maybeSealEvent()};
+const sealOriginalStart=start;
+start=function(){sealOriginalStart();updateSealCount()};
+const sealOriginalBegin=$('beginConfigured').onclick;
+$('beginConfigured').onclick=()=>{seals={plug:false,sound:false};trapEvents=0;sealOriginalBegin();updateSealCount()};
+const sealOriginalEnd=endRun;
+endRun=function(success){sealOriginalEnd(success);if(runEnded){$('modalText').textContent+=' Magical trap events: '+trapEvents+'. Active seals at finish: '+sealCount()+'.'}};
+updateSealCount();
+// Secret-chamber navigation repair: the original click handler was bound before
+// the randomized/secret-aware advance function replaced it.
+// Rebind it to the final implementation, and treat secret rooms independently
+// of the underlying numbered chamber (including Chamber 25).
+const secretAwareAdvance=advance;
+advance=function(){
+ if(mode!=='play'||!cleared||runEnded)return;
+ if(hiddenRoom){
+  hiddenRoom=null;
+  pending=Math.floor(Math.random()*25);
+  if(Math.random()<EDGE_PROBABILITY)beginEdge();
+  else {chamber=pending;onEnter()}
+  return;
+ }
+ secretAwareAdvance();
+};
+$('next').onclick=()=>advance();
+// Render the exit control even when a secret room overlays Chamber 25.
+const secretAwareRender=render;
+render=function(){
+ secretAwareRender();
+ if(mode==='play'&&hiddenRoom){
+  $('next').disabled=!cleared;
+  $('next').textContent='Leave Secret Chamber 🎲';
+  $('release').classList.add('hidden');
+  $('rhythmSkip').classList.remove('hidden');
+ }
+};
+// Secret rooms use finite challenges regardless of the numbered room beneath.
+const secretAwareResetRhythm=resetRhythm;
+resetRhythm=function(){
+ secretAwareResetRhythm();
+ if(hiddenRoom&&chamber===24){
+  durationMs=60000;
+  makePattern();
+  $('rhythmTime').textContent='0:00 / 1:00';
+  $('release').classList.add('hidden');
+  $('rhythmSkip').classList.remove('hidden');
+ }
+};
+// The final room is endless only when it is truly Chamber 25.
+const secretAwareTick=rhythmTick;
+rhythmTick=function(now){
+ if(hiddenRoom&&chamber===24){
+  // Temporarily use a finite secret-room rhythm, without modifying the chamber.
+  // Its completion is handled by the secret exit button above.
+  if(!rhythmRunning)return;
+  elapsedMs=now-startedAt;
+  if(typeof applyMoodShift==='function')applyMoodShift(elapsedMs);
+  while(beatIndex<beatTimes.length&&beatTimes[beatIndex]<=elapsedMs){
+   soundBeat();totalClenches++;$('clenchCount').textContent=totalClenches;
+   const line=$('pulseLine');line.classList.remove('pulse-flash');void line.offsetWidth;line.classList.add('pulse-flash');beatIndex++;
+  }
+  renderBeats(elapsedMs);
+  $('rhythmProgress').style.width=Math.min(100,100*elapsedMs/durationMs)+'%';
+  const secs=Math.floor(elapsedMs/1000);
+  $('rhythmTime').textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0')+' / 1:00';
+  if(elapsedMs>=durationMs){finishRhythm();return}
+  frame=requestAnimationFrame(rhythmTick);return;
+ }
+ secretAwareTick(now);
+};
+// Avoid a secret room inheriting the final room's Release action.
+$('release').onclick=()=>{if(chamber===24&&!hiddenRoom&&mode==='play')endRun(true)};
+
+// Journey-aware dialogue engine: local, offline, contextual, and nonblocking.
+const VOICE_BANK={
+ start:["At last, a traveler. Shall we see how far your resolve carries you?","The doors are listening. Choose carefully; they rarely lead where expected.","Welcome to my labyrinth. Every step writes a different story.","I wonder what this journey will reveal about you."],
+ enter:["Another doorway, another test. Listen closely.","The stones remember your footsteps, even when you do not.","The next rhythm is waiting. Are you ready?","I rearranged the corridors. I hope you appreciate the effort.","A new chamber, and a new chance to surprise me.","The walls are quiet. That usually means something is coming."],
+ repeat:["Back again? I'm beginning to think this chamber is your favorite.","The room recognizes you. Do you recognize its rhythm?","We have met these walls before. Perhaps they'll be kinder this time.","Another visit! The labyrinth does enjoy a familiar face.","You keep returning. I might start charging rent."],
+ backtrack:["You thought every path led forward? How wonderfully optimistic.","A few steps backward can reveal what you missed.","The maze has other plans for you. Follow along.","A familiar corridor, but not quite the same journey.","Sometimes the long way is the only way."],
+ secret:["Oh? You found a door I didn't intend to show you. How interesting.","A secret chamber! You are more observant than I expected.","Shh. Not every visitor discovers this place.","Even I forget where some of these hidden doors lead.","A secret for you, a mystery for me. How delightful."],
+ tempo:["Listen! The rhythm has changed. Keep your focus.","I have grown restless. Let's try a different pace.","Can you follow when I change the rules mid-step?","A little faster—or perhaps slower. Stay attentive.","The metronome follows my mood now."],
+ curious:["I'm curious how you'll handle the next turn.","Show me what you do when the path is uncertain.","There is still so much I want to learn about your journey."],
+ playful:["Oh, this should be entertaining.","I may have moved a door or two. Just for fun.","Don't look so surprised. The labyrinth likes to play."],
+ demanding:["Precision. Patience. I expect both.","The next sequence will require your full attention.","Do not let the changing tempo catch you unprepared."],
+ impressed:["You've endured more than I expected. Perhaps I underestimated you.","That was well done. Even I must admit it.","A rare compliment: you're making this interesting."],
+ endurance:["So many beats, and still you continue. Remarkable.","Your persistence is becoming the stuff of legend here.","The counter keeps climbing. I am paying attention.","Few travelers stay this long. You have my curiosity."],
+ edge:["The Edge has appeared. Only you can choose what comes next.","A difficult crossroads. The decision is yours.","A moment of uncertainty. How will you answer it?"],
+ trap:["An enchanted seal stirs. The labyrinth has marked this passage.","A crimson sigil awakens. Another twist in our tale.","My magic has found a new place to linger."],
+ clear:["The crimson seal fades. Perhaps the maze is feeling generous.","One burden lifted. Enjoy the moment.","The enchantment loosens, and the path opens again."],
+ rhythm:["You found the pulse. Keep following it.","Every beat is another step through my maze.","Good. Stay with the rhythm."],
+ chamberClear:["Well done. Shall we see where the passage leads?","The chamber yields. But the labyrinth is not finished.","You've earned another door. Choose your fate."],
+ final:["One last rhythm. This time, the ending is yours to choose.","The final chamber. The rhythm continues until you decide to release.","You've reached the last door. Only you can end this dance."],
+ release:["The labyrinth releases you. I will remember this journey.","A fitting ending. Until the corridors call again.","You chose your moment. Farewell, traveler."],
+ failure:["Every journey ends somewhere. This one still has a story.","The labyrinth wins this round. There may be another.","Your journey ends here. The doors will wait."],
+ restart:["Another attempt. Perhaps the walls will be kinder.","Back to the beginning? The labyrinth is delighted.","A fresh start, but the maze remembers."],
+ shortcut:["A secret passage! How fortunate—or suspicious.","A leap forward. The labyrinth can be generous.","You found a faster way. For now."],
+ highVisits:["You've crossed so many thresholds that even I have lost count.","This labyrinth has become quite familiar with you.","You are building a remarkable history in these halls."]
+};
+let voiceEntries=[],voiceSeen={},voiceLast='',voiceCooldown=0,voiceMilestones=new Set(),voiceVisits=Array(25).fill(0),voiceLastRoom=0;
+function voiceSay(event,force=false){
+ if(!runConfig.moods && !['start','release','failure'].includes(event))return;
+ const now=Date.now();if(!force && now-voiceCooldown<1700)return;
+ const lines=VOICE_BANK[event]||VOICE_BANK.enter;
+ const used=voiceSeen[event]||(voiceSeen[event]=[]);
+ let candidates=lines.map((line,i)=>({line,i})).filter(x=>!used.includes(x.i)&&x.line!==voiceLast);
+ if(!candidates.length){voiceSeen[event]=[];candidates=lines.map((line,i)=>({line,i})).filter(x=>x.line!==voiceLast)}
+ const pick=candidates[Math.floor(Math.random()*candidates.length)]||{line:lines[0],i:0};
+ voiceSeen[event].push(pick.i);voiceLast=pick.line;voiceCooldown=now;
+ const location=hiddenRoom?'Secret Chamber':`Chamber ${chamber+1}`;
+ voiceEntries.push({line:pick.line,mood,event,location,clenches:totalClenches});
+ if(voiceEntries.length>250)voiceEntries.shift();
+ $('voiceQuote').textContent='“'+pick.line+'”';$('voiceMood').textContent=mood.toUpperCase();
+ $('voiceQuote').classList.remove('flash');void $('voiceQuote').offsetWidth;$('voiceQuote').classList.add('flash');
+ $('voiceToggle').textContent=`Dialogue History (${voiceEntries.length})`;
+ if(!$('voiceLog').classList.contains('hidden'))voiceRenderLog();
+}
+function voiceRenderLog(){const log=$('voiceLog');log.replaceChildren();for(const entry of [...voiceEntries].reverse()){
+ const div=document.createElement('div');div.className='voice-entry';const meta=document.createElement('small');meta.textContent=`${entry.location} · ${entry.mood} · ${entry.clenches} clenches`;
+ const quote=document.createElement('span');quote.textContent='“'+entry.line+'”';div.append(meta,quote);log.append(div);
+}}
+$('voiceToggle').onclick=()=>{const log=$('voiceLog');log.classList.toggle('hidden');if(!log.classList.contains('hidden'))voiceRenderLog()};
+function voiceNewRun(){voiceEntries=[];voiceSeen={};voiceLast='';voiceCooldown=0;voiceMilestones=new Set();voiceVisits=Array(25).fill(0);voiceLastRoom=0;voiceVisits[0]=1;voiceSay('start',true)}
+function voiceProgress(){for(const [threshold,event] of [[50,'rhythm'],[150,'endurance'],[300,'endurance'],[600,'endurance'],[1000,'endurance'],[2000,'endurance'],[5000,'endurance']]){
+ if(totalClenches>=threshold&&!voiceMilestones.has(threshold)){voiceMilestones.add(threshold);voiceSay(event,true);break}
+}}
+// Bind wrappers after all earlier gameplay overrides, avoiding stale click handlers.
+const voiceStartRun=$('beginConfigured').onclick;
+$('beginConfigured').onclick=()=>{voiceStartRun();voiceNewRun()};
+const voiceEnter=onEnter;
+onEnter=function(){const previous=voiceLastRoom;voiceEnter();if(runEnded)return;
+ if(hiddenRoom){voiceSay('secret',true);return}
+ const visits=++voiceVisits[chamber];
+ let event=visits>1?'repeat':chamber<previous?'backtrack':chamber>previous+1?'shortcut':'enter';
+ if(chamber===24)event='final';else if(visitedCount>0&&visitedCount%15===0)event='highVisits';
+ voiceLastRoom=chamber;voiceSay(event,true);
+};
+const voiceMoodShift=applyMoodShift;
+applyMoodShift=function(t){const before=mood;voiceMoodShift(t);if(mood!==before){voiceSay('tempo',true);$('voiceMood').textContent=mood.toUpperCase()}};
+const voiceClear=finishRhythm;
+finishRhythm=function(){voiceClear();voiceSay('chamberClear')};
+const voiceEdge=beginEdge;
+beginEdge=function(){voiceEdge();voiceSay('edge',true)};
+const voiceSeal=maybeSealEvent;
+maybeSealEvent=function(){const count=trapEvents;voiceSeal();if(trapEvents>count)voiceSay(seals.plug||seals.sound?'trap':'clear',true)};
+const voiceEnd=endRun;
+endRun=function(success){if(!runEnded)voiceSay(success?'release':'failure',true);voiceEnd(success)};
+const voiceEdgeRestart=edgeRestart;
+edgeRestart=function(){voiceEdgeRestart();voiceSay('restart',true)};
+// Milestone tracking runs inside the existing animation callback, without modifying beat timing.
+const voiceTick=rhythmTick;
+rhythmTick=function(now){const before=totalClenches;voiceTick(now);if(totalClenches!==before)voiceProgress()};
+// Earlier functions use the current rhythmTick binding on their next animation frame.
+
+// Optional Rule34.xxx online gallery: isolated from chamber progression and beat timing.
+// A failed fetch or image load always restores the original secret-room artwork.
+let onlineArtRequest=0,onlineSeen=new Set();
+function hideOnlineArt(){onlineArtRequest++;$('onlineArtPanel').classList.add('hidden');$('onlineArtImage').classList.add('hidden');$('onlineArtImage').removeAttribute('src')}
+function onlineArtActive(){return Boolean(runConfig.onlineArt&&hiddenRoom&&mode==='play'&&!runEnded)}
+async function loadOnlineArt(){
+ if(!onlineArtActive()){hideOnlineArt();return}
+ const token=++onlineArtRequest;
+ $('onlineArtPanel').classList.remove('hidden');$('onlineArtImage').classList.add('hidden');
+ $('onlineArtStatus').textContent='Requesting a random artwork from Rule34.xxx…';
+ $('onlineArtLink').href='https://rule34.xxx/';
+ try{
+  // Rule34 DAPI uses a JSON post listing. Randomize a page and an item, then
+  // de-duplicate within the current run. Some hosts disallow file:// CORS.
+  const page=Math.floor(Math.random()*40);
+  const endpoint='https://api.rule34.xxx/index.php?page=dapi&s=post&q=index&json=1&limit=100&pid='+page;
+  const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),9000);
+  let response;
+  try{response=await fetch(endpoint,{mode:'cors',signal:controller.signal,credentials:'omit'})}finally{clearTimeout(timeout)}
+  if(!response.ok)throw new Error('Provider HTTP '+response.status);
+  const data=await response.json();if(!Array.isArray(data))throw new Error('Unexpected provider response');
+  const candidates=data.filter(x=>x&&x.id&&(x.sample_url||x.file_url)&&!onlineSeen.has(String(x.id)));
+  if(!candidates.length)throw new Error('No new images returned');
+  const item=candidates[Math.floor(Math.random()*candidates.length)];
+  if(token!==onlineArtRequest||!onlineArtActive())return;
+  onlineSeen.add(String(item.id));
+  const post='https://rule34.xxx/index.php?page=post&s=view&id='+encodeURIComponent(item.id);
+  $('onlineArtLink').href=post;
+  const raw=item.sample_url||item.file_url;
+  const imageUrl=new URL(raw, 'https://rule34.xxx/');
+  if(imageUrl.protocol!=='https:')throw new Error('Unsupported image URL');
+  $('onlineArtStatus').textContent='Artwork #'+item.id+' · External image preview';
+  const img=$('onlineArtImage');
+  img.onerror=()=>{if(token!==onlineArtRequest)return;img.classList.add('hidden');$('onlineArtStatus').textContent='Image preview blocked. Open the artwork at the source instead.'};
+  img.onload=()=>{if(token===onlineArtRequest&&onlineArtActive())img.classList.remove('hidden')};
+  img.src=imageUrl.href;
+ }catch(err){if(token!==onlineArtRequest)return;
+  $('onlineArtStatus').textContent='Online gallery unavailable ('+(err.name==='AbortError'?'request timed out':'network/API restriction')+'). The original Secret Room art remains available. You can open the provider directly.';
+  $('onlineArtLink').href='https://rule34.xxx/';
+ }
+}
+$('onlineArtNext').onclick=()=>loadOnlineArt();
+$('onlineArtHide').onclick=()=>hideOnlineArt();
+const onlineRender=render;
+render=function(){onlineRender();if(!onlineArtActive())hideOnlineArt()};
+const onlineOnEnter=onEnter;
+onEnter=function(){onlineOnEnter();if(onlineArtActive())loadOnlineArt()};
+const onlineReset=reset;
+reset=function(){hideOnlineArt();onlineSeen.clear();onlineReset()};
+const onlineStart=$('beginConfigured').onclick;
+$('beginConfigured').onclick=()=>{hideOnlineArt();onlineSeen.clear();onlineStart()};
+const onlineEnd=endRun;
+endRun=function(success){hideOnlineArt();onlineEnd(success)};
+
+// Vixen's commands, timed visual blackouts, and secret-chamber three-door exits.
+// Keep each new feature isolated from the metronome clock and chamber progress.
+let trial=null,trialBeatStart=0,trialShiftStart=0,trialStartMs=0,trialFinished=false;
+let blackoutUntil=0,blackoutStarted=false,blackoutDone=false,doorOpen=false;
+const commandTypes=[
+ {id:'beats',name:'The Steady Hand',goal:16,text:'Follow sixteen audible beats without pausing.'},
+ {id:'shifts',name:'The Changing Queen',goal:1,text:'Endure one of Vixen’s mood-driven tempo shifts.'},
+ {id:'blackout',name:'The Veiled Pulse',goal:1,text:'Follow the sound while the approaching beat markers vanish.'},
+ {id:'endurance',name:'The Long Vigil',goal:28,text:'Hold your focus through twenty-eight beats.'}
+];
+function commandDisplay(message){const el=$('vixenCommand');if(!el)return;if(!message){el.classList.add('hidden');el.textContent='';return}el.classList.remove('hidden');el.innerHTML='<strong>✦ VIXEN’S COMMAND · '+trial.name+'</strong><small>'+message+'</small>'}
+function trialSetup(){
+ trial=null;trialFinished=false;blackoutUntil=0;blackoutStarted=false;blackoutDone=false;
+ $('track').classList.remove('blackout');commandDisplay('');
+ if(mode!=='play'||runEnded)return;
+ // Some chambers have no extra challenge; each visit rolls independently.
+ if(Math.random()>.62)return;
+ const options=commandTypes.filter(x=>x.id!=='shifts'||runConfig.moods);
+ trial=options[Math.floor(Math.random()*options.length)];
+ trialBeatStart=totalClenches;trialShiftStart=moodShiftNumber;trialStartMs=0;
+ commandDisplay(trial.text+' · Awaiting rhythm start.');
+ if(typeof voiceSay==='function')voiceSay('command',true);
+}
+function trialUpdate(){
+ if(!trial||trialFinished||mode!=='play'||!rhythmRunning)return;
+ const beats=totalClenches-trialBeatStart;
+ if(trial.id==='blackout'){
+  if(!blackoutStarted&&elapsedMs>=4500){blackoutStarted=true;blackoutUntil=elapsedMs+9000;$('track').classList.add('blackout');$('rhythmStatus').textContent='Vixen hides the approaching markers. Follow the audible metronome.';}
+  if(blackoutStarted&&!blackoutDone&&elapsedMs>=blackoutUntil){blackoutDone=true;$('track').classList.remove('blackout');}
+ }
+ let done=false,progress='';
+ if(trial.id==='beats'||trial.id==='endurance'){done=beats>=trial.goal;progress=beats+' / '+trial.goal+' beats';}
+ if(trial.id==='shifts'){const shifts=Math.max(0,moodShiftNumber-trialShiftStart);done=shifts>=1;progress=shifts+' / 1 mood shifts';}
+ if(trial.id==='blackout'){done=blackoutDone;progress=blackoutStarted?'Listen carefully — '+Math.max(0,Math.ceil((blackoutUntil-elapsedMs)/1000))+' seconds':'Blackout approaching…';}
+ if(done){trialFinished=true;$('track').classList.remove('blackout');commandDisplay('COMMAND COMPLETE · '+trial.name+' · Vixen acknowledges your focus.');if(typeof voiceSay==='function')voiceSay('commandDone',true)}
+ else commandDisplay(trial.text+' · '+progress);
+}
+const featureReset=resetRhythm;
+resetRhythm=function(){featureReset();trialSetup()};
+const featureTick=rhythmTick;
+rhythmTick=function(now){featureTick(now);trialUpdate()};
+const featurePause=$('rhythmPause').onclick;
+$('rhythmPause').onclick=()=>{featurePause();if(!rhythmRunning)$('track').classList.remove('blackout')};
+const featureStart=$('rhythmStart').onclick;
+$('rhythmStart').onclick=()=>{featureStart();if(rhythmRunning&&blackoutStarted&&!blackoutDone)$('track').classList.add('blackout')};
+const featureFinish=finishRhythm;
+finishRhythm=function(){featureFinish();$('track').classList.remove('blackout');if(trial&&!trialFinished&&trial.id==='blackout'){trialFinished=true;commandDisplay('CHAMBER COMPLETE · The veil has lifted.')}};
+function openSecretDoors(){
+ doorOpen=true;$('doorOverlay').classList.remove('hidden');
+ if(typeof voiceSay==='function')voiceSay('doors',true);
+}
+function doorDestination(which){
+ const random=n=>Math.floor(Math.random()*n);
+ if(which===0){ // Crimson: often advances, occasionally springs a backtrack
+  return Math.random()<.72?Math.min(24,chamber+2+random(7)):Math.max(0,chamber-1-random(5));
+ }
+ if(which===1)return random(25); // Obsidian: entirely unpredictable
+ if(history.length&&Math.random()<.8)return history[random(history.length)];
+ return Math.max(0,chamber-1-random(3)); // Silver: familiar routes
+}
+function chooseDoor(which){
+ if(!doorOpen||mode!=='play'||runEnded)return;
+ doorOpen=false;$('doorOverlay').classList.add('hidden');
+ const destination=doorDestination(which);
+ hiddenRoom=null;pending=destination;
+ if(Math.random()<EDGE_PROBABILITY)beginEdge();else{chamber=pending;onEnter()}
+}
+$('doorOverlay').querySelectorAll('[data-door]').forEach(button=>button.onclick=()=>chooseDoor(Number(button.dataset.door)));
+// Bind the button again because earlier editions captured a stale advance handler.
+const featureAdvance=advance;
+advance=function(){
+ if(mode!=='play'||!cleared||runEnded||doorOpen)return;
+ if(hiddenRoom){openSecretDoors();return}
+ featureAdvance();
+};
+$('next').onclick=()=>advance();
+const featureEnd=endRun;
+endRun=function(success){doorOpen=false;$('doorOverlay').classList.add('hidden');$('track').classList.remove('blackout');featureEnd(success)};
+const featureResetRun=reset;
+reset=function(){doorOpen=false;$('doorOverlay').classList.add('hidden');featureResetRun()};
+// Make commands understandable even if the previous dialogue bank lacks these events.
+if(typeof VOICE_BANK!=='undefined'){
+ VOICE_BANK.command=['A new challenge. Listen carefully; I may take the markers away.','Let us see whether you can keep your focus.','A little test, just for you. Follow my rhythm.'];
+ VOICE_BANK.commandDone=['Well done. You kept your focus.','Impressive. I may have to make the next one harder.','You passed my little test. For now.'];
+ VOICE_BANK.doors=['Three doors, three different promises. Choose wisely.','Crimson, obsidian, or silver? I wonder what you will choose.','There is no map for this decision. Only your instinct.'];
+}
+</script><div id="doorOverlay" class="door-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="doorTitle"><div class="door-card"><div class="small">✦ VIXEN'S THREE DOORS ✦</div><h2 id="doorTitle">Choose your passage</h2><p>Three doors wait beyond the secret chamber. Their destinations are hidden until you choose.</p><div class="door-grid"><button class="door-choice" type="button" data-door="0"><span>♜</span>THE CRIMSON DOOR<small> Risk and opportunity</small></button><button class="door-choice" type="button" data-door="1"><span>☾</span>THE OBSIDIAN DOOR<small> An uncertain path</small></button><button class="door-choice" type="button" data-door="2"><span>✧</span>THE SILVER DOOR<small> A familiar echo</small></button></div><p class="small" id="doorHint">Vixen watches your choice.</p></div></div></body></html>
