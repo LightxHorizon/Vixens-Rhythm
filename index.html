@@ -3,6 +3,17 @@
 
 /* Vixen's journey-aware dialogue */
 .vixen-voice{margin:12px 0;padding:13px 17px;border:1px solid #aa6175;border-radius:12px;background:linear-gradient(100deg,#2b1022e8,#140d1de8);box-shadow:0 0 22px #a52a5033}.voice-head{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#e9b984;font-size:12px;letter-spacing:.07em}.voice-quote{font-size:16px;color:#ffe1d5;font-style:italic;line-height:1.5;margin-top:7px}.voice-log{max-height:245px;overflow:auto;margin-top:9px;padding:8px;border-top:1px solid #754251}.voice-entry{padding:7px 3px;border-bottom:1px solid #4d2b3a;font-size:13px;color:#f2d4d1}.voice-entry small{display:block;color:#d5a987;margin-bottom:3px}.voice-button{font-size:12px;padding:6px 10px}.voice-quote.flash{animation:voiceglow .65s ease}@keyframes voiceglow{0%{text-shadow:0 0 15px #ff7c8f}100%{text-shadow:none}}
+
+/* Seal event artwork is the focus; only a small, readable caption floats below it. */
+.stage.seal-preview{background:#120810}
+.stage.seal-preview>img#art{object-fit:contain;object-position:center;filter:brightness(1.12) contrast(1.05)}
+.stage.seal-preview:after{box-shadow:none}
+.stage.seal-preview .overlay.seal-modal{background:transparent;align-items:flex-end;padding:12px 16px 16px;pointer-events:none}
+.stage.seal-preview .overlay.seal-modal .panel{pointer-events:auto;max-width:min(620px,96%);padding:12px 18px;background:linear-gradient(110deg,#160917eb,#2b0d20e8);border:1px solid #e5a575;border-radius:10px;box-shadow:0 4px 25px #000c}
+.stage.seal-preview .overlay.seal-modal .panel h2{font-size:clamp(18px,2.3vw,25px);margin:3px 0}
+.stage.seal-preview .overlay.seal-modal .panel p{font-size:clamp(12px,1.3vw,15px);line-height:1.35;margin:6px 0 10px}
+.stage.seal-preview .overlay.seal-modal .panel button{padding:9px 16px;font-size:13px}
+@media(max-width:650px){.stage.seal-preview{aspect-ratio:3/4}.stage.seal-preview .overlay.seal-modal{padding:8px}.stage.seal-preview .overlay.seal-modal .panel{padding:9px 12px}.stage.seal-preview .overlay.seal-modal .panel h2{font-size:18px}.stage.seal-preview .overlay.seal-modal .panel p{font-size:12px;margin:4px 0 7px}.stage.seal-preview .overlay.seal-modal .panel button{padding:8px 12px;font-size:12px}}
 </style><style>
 .rhythm{margin:16px 0;padding:18px;border:1px solid #a96b64;background:#1b0d19;border-radius:8px}.rhythm h3{margin:0 0 8px;color:#ffd3a1}.rhythm-top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}.rhythm select{background:#25101e;color:#ffe4c6;border:1px solid #b87e69;padding:9px}.track{height:94px;position:relative;margin:14px 0 7px;border:1px solid #8b5064;background:linear-gradient(90deg,#2a1027,#120a17);overflow:hidden}.pulse-line{position:absolute;left:15%;top:0;bottom:0;width:3px;background:#ffd9a0;box-shadow:0 0 15px #ff537f}.beat{position:absolute;top:26px;width:30px;height:30px;border-radius:50%;background:#f35b80;box-shadow:0 0 17px #ff426c;transform:translateX(-50%)}.pulse-flash{animation:flash .22s ease-out}@keyframes flash{0%{box-shadow:0 0 15px #ff537f}35%{box-shadow:0 0 35px 15px #ff9dbe}100%{box-shadow:0 0 15px #ff537f}}.rhythm-controls{display:flex;gap:9px;flex-wrap:wrap}.rhythm-controls button{padding:9px 14px}.progress{height:9px;background:#39212e;border:1px solid #765063;margin-top:12px}.progress div{height:100%;background:linear-gradient(90deg,#a32d5a,#ffc079);width:0%}.rhythm-note{color:#e9b9c3;font-size:13px;margin-top:8px}
 </style><style>
@@ -166,9 +177,10 @@ function maybeSealEvent(){
  $('art').src='assets/'+encodeURIComponent(info.file);$('art').classList.remove('hidden');
  $('fallback').classList.add('hidden');
  $('rhythm').classList.add('hidden');
+ $('stage').classList.add('seal-preview');$('modal').classList.add('seal-modal');
  modal('Vixen’s enchanted traps',info.title+(event.kind==='bind'?' — Seal Awakened':' — Seal Lifted'),
  event.kind==='bind'?'Vixen’s '+mood+' mood awakens a crimson magical seal. Its effect is now marked active in your run.':'Vixen’s '+mood+' mood lifts the magical seal. Its effect is no longer active.',
- 'Continue the Journey',()=>{$('modal').classList.add('hidden');render();$('rhythm').classList.remove('hidden')});
+ 'Continue the Journey',()=>{$('stage').classList.remove('seal-preview');$('modal').classList.remove('seal-modal');$('modal').classList.add('hidden');render();$('rhythm').classList.remove('hidden')});
 }
 const sealOriginalEnter=onEnter;
 onEnter=function(){sealOriginalEnter();updateSealCount();maybeSealEvent()};
@@ -455,9 +467,9 @@ advance=function(){
 };
 $('next').onclick=()=>advance();
 const featureEnd=endRun;
-endRun=function(success){doorOpen=false;$('doorOverlay').classList.add('hidden');$('track').classList.remove('blackout');featureEnd(success)};
+endRun=function(success){$('stage').classList.remove('seal-preview');$('modal').classList.remove('seal-modal');doorOpen=false;$('doorOverlay').classList.add('hidden');$('track').classList.remove('blackout');featureEnd(success)};
 const featureResetRun=reset;
-reset=function(){doorOpen=false;$('doorOverlay').classList.add('hidden');featureResetRun()};
+reset=function(){$('stage').classList.remove('seal-preview');$('modal').classList.remove('seal-modal');doorOpen=false;$('doorOverlay').classList.add('hidden');featureResetRun()};
 // Make commands understandable even if the previous dialogue bank lacks these events.
 if(typeof VOICE_BANK!=='undefined'){
  VOICE_BANK.command=['A new challenge. Listen carefully; I may take the markers away.','Let us see whether you can keep your focus.','A little test, just for you. Follow my rhythm.'];
