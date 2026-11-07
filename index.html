@@ -127,7 +127,7 @@ function selectMood(){if(!runConfig.moods){nextMoodShift=Infinity;updateTempoBan
 
 function showBuilder(){$('modal').classList.add('hidden');$('runBuilder').classList.remove('hidden')}
 $('builderCancel').onclick=()=>{$('runBuilder').classList.add('hidden');modal('Enter the labyrinth',"Vixen's Rhythm",'Choose your run settings to begin.','Configure Run',showBuilder)};
-$('beginConfigured').onclick=()=>{runConfig={difficulty:document.querySelector('input[name="difficulty"]:checked').value,length:document.querySelector('input[name="length"]:checked').value,moods:$('moodOption').checked,secrets:$('secretOption').checked,plug:$('plugOption').checked,sound:$('soundOption').checked,onlineArt:$('onlineArtOption').checked};$('runBuilder').classList.add('hidden');attempts=1;chamber=0;visitedCount=1;totalClenches=0;history=[0];hiddenRoom=null;secretDiscoveries=0;selectMood();start()};
+$('beginConfigured').onclick=()=>{runConfig={difficulty:document.querySelector('input[name="difficulty"]:checked').value,length:document.querySelector('input[name="length"]:checked').value,moods:$('moodOption').checked,secrets:$('secretOption').checked,plug:$('plugOption').checked,sound:$('soundOption').checked,onlineArt:false};$('runBuilder').classList.add('hidden');attempts=1;chamber=0;visitedCount=1;totalClenches=0;history=[0];hiddenRoom=null;secretDiscoveries=0;selectMood();start()};
 // Initial and replay flow always offer the builder.
 $('modalButton').onclick=showBuilder;
 const oldRollPassage=rollPassage;
